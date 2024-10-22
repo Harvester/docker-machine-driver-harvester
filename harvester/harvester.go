@@ -40,6 +40,7 @@ type Driver struct {
 	VMAffinity  string
 	ClusterType string
 	ClusterID   string
+	ClusterName string
 
 	ServerVersion string
 
