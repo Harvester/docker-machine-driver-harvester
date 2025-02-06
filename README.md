@@ -4,6 +4,11 @@ docker-machine-driver-harvester
 
 The [Harvester](https://github.com/harvester/harvester) machine driver for Docker.
 
+## Branches
+
+- `master` branch is used for development and release.
+- `v0.7.x` branch is used for Rancher versions 2.10.x and below.
+
 ## Development
 
 ### Building
