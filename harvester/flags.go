@@ -39,6 +39,11 @@ func (d *Driver) GetCreateFlags() []mcnflag.Flag {
 			Usage:  "harvester cluster id",
 		},
 		mcnflag.StringFlag{
+			EnvVar: "HARVESTER_CLUSTER_NAME",
+			Name:   "harvester-cluster-name",
+			Usage:  "harvester cluster name",
+		},
+		mcnflag.StringFlag{
 			EnvVar: "HARVESTER_VM_NAMESPACE",
 			Name:   "harvester-vm-namespace",
 			Usage:  "harvester vm namespace",
@@ -202,6 +207,7 @@ func (d *Driver) SetConfigFromFlags(flags drivers.DriverOptions) error {
 	d.VMAffinity = stringSupportBase64(flags.String("harvester-vm-affinity"))
 	d.ClusterType = flags.String("harvester-cluster-type")
 	d.ClusterID = flags.String("harvester-cluster-id")
+	d.ClusterName = flags.String("harvester-cluster-name")
 
 	d.CPU = flags.Int("harvester-cpu-count")
 	d.MemorySize = fmt.Sprintf("%dGi", flags.Int("harvester-memory-size"))

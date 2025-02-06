@@ -15,6 +15,7 @@ import (
 	"github.com/rancher/machine/libmachine/state"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/labels"
 	"k8s.io/utils/pointer"
 	kubevirtv1 "kubevirt.io/api/core/v1"
 
@@ -25,6 +26,7 @@ const (
 	diskNamePrefix      = "disk"
 	interfaceNamePrefix = "nic"
 	poolNameLabelKey    = "harvesterhci.io/machineSetName"
+	clusterNameLabelKey = "cluster.kubernetes.io/name"
 )
 
 func (d *Driver) Create() error {
@@ -41,6 +43,12 @@ func (d *Driver) Create() error {
 		Namespace(d.VMNamespace).Name(d.MachineName).CPU(d.CPU).Memory(d.MemorySize).
 		CloudInitDisk(builder.CloudInitDiskName, builder.DiskBusVirtio, false, 0, *cloudInitSource).
 		EvictionStrategy(true).RunStrategy(kubevirtv1.RunStrategyRerunOnFailure)
+
+	if d.ClusterName != "" {
+		vmBuilder.Labels(labels.Set{
+			clusterNameLabelKey: d.ClusterName,
+		})
+	}
 
 	// affinity
 	var affinity *corev1.Affinity
